@@ -23,19 +23,3 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
     - name: Create Tunnel
       run: .\ngrok\ngrok.exe tcp 3389
-
-    repetitive-task:
-    runs-on: windows-latest
-    steps:
-    - name: Loop download and delete
-      shell: pwsh
-      run: |
-        $startTime = Get-Date
-        while ((Get-Date) - $startTime).TotalHours -lt 6) {
-          Write-Output "Downloading file..."
-          Invoke-WebRequest https://ia803407.us.archive.org/13/items/StillAlive_201707/Still%20Alive.ogg -OutFile StillAlive.ogg
-          Start-Sleep -Seconds 10
-          Write-Output "Deleting file..."
-          Remove-Item -Path StillAlive.ogg -Force
-          Start-Sleep -Seconds 10
-        }
